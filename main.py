@@ -40,7 +40,13 @@ def choice_1():
         name = str(input("Enter your name (name surname (15 characters max))=> "))
         f_name_control = family_name_control(name)
     
-    phone_number = str(input("Enter your phone number => "))
+    digit = False
+
+    while not digit:
+        phone_number = str(input("Enter your phone number => "))
+        digit = phone_number.isdigit()
+
+    
     
     print("Choose a ticket type :")
     print("1. Day 1")

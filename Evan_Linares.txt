@@ -1,5 +1,5 @@
-Type of ticket(s) bought : Weekend-Camp
-Phone number : 111
-Number of people : 3
-Total Cost : €6000
+Type of ticket(s) bought : Day1
+Phone number : 110
+Number of people : 1
+Total Cost : €870
 Dining Pass : Yes
