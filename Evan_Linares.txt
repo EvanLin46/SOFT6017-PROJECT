@@ -1,5 +1,5 @@
 Type of ticket(s) bought : Day1
-Phone number : 110
+Phone number : 1111111111
 Number of people : 1
-Total Cost : €870
-Dining Pass : Yes
+Total Cost : €850
+Dining Pass : No

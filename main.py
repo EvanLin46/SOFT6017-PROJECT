@@ -6,7 +6,7 @@ def menu(ticket_type = "", number_of_people = 0, fine_dining_pass = ""):
     #initialisation
     choice = 0
 
-
+    print("MUSIC FARM FESTIVAL")
     print("===================")
     print("1. Make a Booking")
     print("2. Review Bookings")
@@ -196,7 +196,7 @@ def file_extras_update(filename, ticket_type, number_of_people):
         if data != []:
             new_lines.append(data)
 
-    #Day 1
+    
     if ticket_type == "Day1":
         int_val = int(new_lines[0][1])
         int_val += number_of_people
@@ -294,6 +294,7 @@ def choice_3(ticket_type, number_of_people, fine_dining_pass):
     print("Your reservation has been saved.")
 
 
+
 def main():
     menu()
 
@@ -301,8 +302,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-
-
-#add a stock availability condition !!!!!!!!!!!!!!!!!!!!!!!
-#voir effacement du fichier client
