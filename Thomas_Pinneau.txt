@@ -1,0 +1,5 @@
+Type of ticket(s) bought : Weekend-Camp
+Phone number : 202020202
+Number of people : 4
+Total Cost : €8000
+Dining Pass : Yes

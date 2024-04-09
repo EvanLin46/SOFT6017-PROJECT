@@ -1,2 +1,2 @@
-FineDiningDay1,7
-FineDiningDay2,0
+FineDiningDay1,2
+FineDiningDay2,2

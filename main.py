@@ -10,9 +10,11 @@ def menu(ticket_type = "", number_of_people = 0, fine_dining_pass = ""):
     print("===================")
     print("1. Make a Booking")
     print("2. Review Bookings")
-    print("3. Exit\n")
+    print("3. Stats")
+    print("4. Income")
+    print("5. Exit\n")
     
-    while not choice in (1, 2, 3):
+    while not choice in (1, 2, 3, 4, 5):
         choice = int(input("=>"))
 
     print("\n")
@@ -24,10 +26,17 @@ def menu(ticket_type = "", number_of_people = 0, fine_dining_pass = ""):
     elif choice == 2:
         choice_2()
         menu(ticket_type, number_of_people, fine_dining_pass)
-        
-    else:
-        choice_3(ticket_type, number_of_people, fine_dining_pass)
+    
+    elif choice == 3:
+        choice_3()
+        menu(ticket_type, number_of_people, fine_dining_pass)
 
+    elif choice == 4:
+        choice_4()
+        menu(ticket_type, number_of_people, fine_dining_pass)
+    
+    elif choice == 5:
+        choice_5(ticket_type, number_of_people, fine_dining_pass)
 
 
 #choice 1
@@ -53,7 +62,9 @@ def choice_1():
     print("2. Day 2")
     print("3. Weekend-Camp\n")
 
-    ticket_type_choice = int(input("=>"))
+    ticket_type_choice = 0
+    while not ticket_type_choice in (1, 2, 3):
+        ticket_type_choice = int(input("=>"))
 
     if ticket_type_choice == 1:
         ticket_type = "Day1"
@@ -98,9 +109,43 @@ def choice_1():
     #client file creation
     create_client_file(name, phone_number, ticket_type, number_of_people, fine_dining_pass, total_cost)
 
+    groups_file_update(name, str(number_of_people))
 
     return ticket_type, number_of_people, fine_dining_pass
 
+
+
+def groups_file_update(new_name, number_of_people):
+    file = open("groups.txt", "r")
+
+    new_lines = []
+
+    lines = file.readlines()
+
+    for line in lines:
+        data = line.rstrip()
+        data = data.split(",")
+        if data != []:
+            new_lines.append(data) 
+    
+    file.close()
+
+    #adding the new datas 
+    new_lines.append([new_name, number_of_people])
+
+    #rewriting the file
+    file = open("groups.txt", "w")
+
+    for line in new_lines:
+        count = 0
+        for data in line:
+            if count <1:
+                file.write(data+",")
+            else:
+                file.write(data+"\n")
+            count+=1
+
+    file.close()
 
 def family_name_control(complet_name):
     
@@ -281,7 +326,7 @@ def file_data_recovery(filename1, filename2):
     return day1_data, day2_data, weekend_data, dining_pass_day1, dining_pass_day2
 
 #choice 3
-def choice_3(ticket_type, number_of_people, fine_dining_pass):
+def choice_5(ticket_type, number_of_people, fine_dining_pass):
     
     #file updating ----------------------------------
     file_sales_update("Sales_2024.txt",ticket_type, number_of_people)
@@ -294,11 +339,129 @@ def choice_3(ticket_type, number_of_people, fine_dining_pass):
     print("Your reservation has been saved.")
 
 
+def choice_3():
+    names_list, numbers_list = read_groups_file()
+
+    largest_group = numbers_list.index(max(numbers_list))
+
+    print(f"The largest booking is by {names_list[largest_group]} and is for {numbers_list[largest_group]} people.")
+
+    numbers_sum = sum(numbers_list)
+    booking_average = numbers_sum/len(numbers_list)
+
+    print(f"The average size is {booking_average} .\n\n")
+
+    enter_to_continue = str(input("Press Return to continue: "))
+    
+
+def read_groups_file():
+    file = open("groups.txt", "r")
+
+    new_lines = []
+
+    lines = file.readlines()
+
+    for line in lines:
+        data = line.rstrip()
+        data = data.split(",")
+        if data != []:
+            new_lines.append(data) 
+    
+    file.close()
+
+    names_list = []
+    numbers_list = []
+
+    for line in new_lines:
+        names_list.append(line[0])
+        numbers_list.append(int(line[1]))
+
+    return names_list, numbers_list
+
+
+def choice_4():
+    sales_datas = read_sales_file()
+
+    extras_datas = read_extras_file()
+    
+    total_day1 = 0
+    total_day2 = 0
+    total_weekend = 0
+    total_fine_dining = 0
+
+    total_current_income = 0
+
+    count = 0
+    for line in sales_datas:
+        if count == 0:
+            total_day1 += int(line[3])*850
+        
+        elif count == 1:
+            total_day2 += int(line[3])*850
+
+        else : total_weekend += int(line[3])*2000
+        count += 1
+
+    
+    for line in extras_datas:
+        total_fine_dining += int(line[1])*20
+
+    total_current_income = total_day1 + total_day2 + total_weekend + total_fine_dining
+    
+    print(f"Total income = €{total_current_income}\n")
+
+    breakdown = ""
+    while not breakdown.upper() in ("Y", "N"):
+        breakdown = str(input("Would you like to see a breakdown Y/N : "))
+
+    if breakdown.upper() == "Y":
+        print(f"Day 1 :     €{total_day1}")
+        print(f"Day 2 :     €{total_day2}")
+        print(f"Weekend Tickets :     €{total_weekend}")
+        print(f"Fine Dining :   €{total_fine_dining}")
+        print(f"Total : €{total_current_income}\n")
+
+    enter_to_continue = str(input("Press Return to continue: "))
+
+def read_sales_file():
+    file = open("Sales_2024.txt", "r")
+
+    new_lines = []
+
+    lines = file.readlines()
+
+    for line in lines:
+        data = line.rstrip()
+        data = data.split(",")
+        if data != []:
+            new_lines.append(data) 
+    
+    file.close()
+    
+    return new_lines
+
+def read_extras_file():
+    file = open("Extras.txt", "r")
+
+    new_lines = []
+
+    lines = file.readlines()
+
+    for line in lines:
+        data = line.rstrip()
+        data = data.split(",")
+        if data != []:
+            new_lines.append(data) 
+    
+    file.close()
+    
+    return new_lines
 
 def main():
     menu()
-
+    
 
 if __name__ == "__main__":
     main()
+
 

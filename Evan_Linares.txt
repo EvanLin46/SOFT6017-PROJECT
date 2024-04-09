@@ -1,5 +1,5 @@
 Type of ticket(s) bought : Day1
-Phone number : 1111111111
+Phone number : 120202020
 Number of people : 1
 Total Cost : €850
 Dining Pass : No

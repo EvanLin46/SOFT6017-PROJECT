@@ -1,0 +1,5 @@
+Type of ticket(s) bought : Day2
+Phone number : 2020200202
+Number of people : 1
+Total Cost : €850
+Dining Pass : No
